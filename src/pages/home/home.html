@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle left>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Sign In</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding class="sign_in" style="background-color: #273747 !important;">
+
+  <ion-list *ngIf="show">
+
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+      <ion-grid style="margin-top:5%;margin-bottom:9%">
+        <img src="assets/img/logo.png" class="sign_in_logo">
+      </ion-grid>
+      <ion-item>
+        <br>
+        <br>
+        <ion-label stacked>Username</ion-label>
+        <ion-input hidden></ion-input>
+        <ion-input formControlName="email" name="email" type="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input formControlName="password" name="password" type="password" required></ion-input>
+      </ion-item>
+      <br>
+      <br>
+      <ion-grid>
+        <ion-col >
+          <button ion-button class="login-button" full name="Sign In" style="background-color: #49c098;color: white;">Sign In</button>
+        </ion-col>
+      </ion-grid>
+
+    </form>
+  </ion-list>
+
+</ion-content>

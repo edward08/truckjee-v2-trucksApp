@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle left>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <span>  Your Trucks</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home">
+  <div class="map-wrapper">
+    <div #map id="map"></div>
+  </div>
+
+  <div class="bottom request-controls">
+    <ion-row style="margin-top: 10%">
+      <ion-col width-100>
+        <button ion-button full class="tj-button" (touchstart)="viewTrucks()">
+          <ion-icon name="md-car"></ion-icon>
+          VIEW TRUCKS
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <div class="page-header">
+      <h1> <small></small></h1>
+    </div>
+    <div class="page-header">
+      <h1> <small></small></h1>
+    </div>
+    <ion-row>
+      <ion-col>
+        Copyright © Jeeth Trucks Private Limited 2017
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
