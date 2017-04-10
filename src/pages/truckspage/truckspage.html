@@ -8,32 +8,17 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
-<ion-content class="home">
-  <div class="map-wrapper">
-    <div #map id="map"></div>
-  </div>
-
-  <div class="bottom request-controls">
-    <ion-row style="margin-top: 10%">
-      <ion-col width-100>
-        <button ion-button full class="tj-button" (touchstart)="viewTrucks()">
-          <ion-icon name="md-car"></ion-icon>
-          VIEW TRUCKS
-        </button>
-      </ion-col>
-    </ion-row>
-
-    <div class="page-header">
-      <h1> <small></small></h1>
-    </div>
-    <div class="page-header">
-      <h1> <small></small></h1>
-    </div>
-    <ion-row>
-      <ion-col>
-        Copyright © Jeeth Trucks Private Limited 2017
-      </ion-col>
-    </ion-row>
-  </div>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let truck of trucks" (click)='getTruck(truck)'>
+      <p>Truck Number</p>{{truck.truck_number}}
+      <ion-icon style="color:red" name="radio-button-on" item-right *ngIf="truck.gps_updated_speed == 0"></ion-icon>
+      <ion-icon style="color:green" name="radio-button-on" item-right *ngIf="truck.gps_updated_speed != 0"></ion-icon>
+      <p></p>
+      <p>Location</p>{{truck.formatted_address}}
+      <p>Updated at </p>{{ truck.gps_updated_time }}
+      <p></p>
+      <p>Speed</p>{{truck.gps_updated_speed}} km/hr
+    </ion-item>
+  </ion-list>
 </ion-content>

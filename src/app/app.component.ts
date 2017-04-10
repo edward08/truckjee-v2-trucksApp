@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { TrucksPage } from '../pages/truckspage/truckspage';
 import { Authentication } from '../providers/authentication';
+import {sessionCheck} from "../providers/session-check";
+import {LiveIndentPage} from "../pages/live-indent/live-indent";
 
 
 @Component({
@@ -27,13 +29,14 @@ export class MyApp {
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,
               public loadingCtrl:LoadingController,
-              public auth:Authentication) {
+              public auth:Authentication,public session:sessionCheck) {
     let loading = loadingCtrl.create({
       content: 'Loading...'
     });
     loading.present();
 
     platform.ready().then(() => {
+      this.registerBackButtonListener();
       statusBar.styleDefault();
       splashScreen.hide();
       auth.isAuthenticated().then((data) => {
@@ -42,6 +45,7 @@ export class MyApp {
         {
           this.is_logged_in = true;
           this.assumedRole = data.role;
+          console.log(this.assumedRole);
           this.handlePagesByRole();
           if(data.role == "owner")
           {
@@ -56,12 +60,29 @@ export class MyApp {
         }
         else
         {
-          console.log("not log in");
           this.is_logged_in = false;
           this.nav.setRoot(HomePage);
           loading.dismiss();
         }
       });
+    });
+    session.getEmittedValue().subscribe(data => {
+      console.log("session");
+      this.assumedRole = data;
+      this.is_logged_in = true;
+      this.handlePagesByRole();
+    });
+  }
+  registerBackButtonListener() {
+    document.addEventListener('backbutton', () => {
+      if(this.nav.length() == 1) {
+        if(this.assumedRole == "owner") {
+          this.nav.setRoot(TrucksPage);
+        }
+        else if(this.assumedRole == "transporter") {
+          this.nav.setRoot(HomePage);
+        }
+      }
     });
   }
   handlePagesByRole()
@@ -69,7 +90,8 @@ export class MyApp {
     if( this.assumedRole == "owner" )
     {
       this.ownerPages = [
-        { title: 'Trucks', component: TrucksPage }
+        { title: 'Trucks', component: TrucksPage },
+        { title: 'Indents', component: LiveIndentPage }
       ];
     }
   }

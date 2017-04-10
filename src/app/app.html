@@ -7,18 +7,14 @@
 
     <ion-content style="background-color: #273747">
         <ion-list style="margin-top:20%;">
-            {{is_logged_in}}
-
             <div *ngIf="is_logged_in">
-
                 <div *ngIf="assumedRole == 'owner'">
                     <button style="background-color: #273747; color: #49c098" menuClose ion-item *ngFor="let p of ownerPages" (touchstart)="openPage(p)">
-                        {{p.title}}
+                        <ion-icon name="ion-model-s"></ion-icon>{{p.title}}
                     </button>
                 </div>
                 <button style="background-color: #273747; color: #49c098" menuClose ion-item (touchstart)="signOut()"> Sign out </button>
             </div>
-
             <div *ngIf="!is_logged_in">
                 <button style="background-color: #273747; color: #49c098" menuClose ion-item *ngFor="let p of pages" (touchstart)="openPage(p)">
                     {{p.title}}

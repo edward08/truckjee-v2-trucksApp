@@ -1,38 +1,30 @@
-//Core Modules
-import { Component, ViewChild,ElementRef } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { Authentication } from '../../providers/authentication'
-
-declare var google;
+import { Component } from '@angular/core';
+import {Platform, NavParams, ViewController, LoadingController, NavController} from 'ionic-angular';
+import {Api} from "../../providers/api";
+import {TruckInMapPage} from "../truck-in-map/truck-in-map";
 @Component({
-  selector: 'truckspage',
   templateUrl: 'truckspage.html'
 })
-
 export class TrucksPage {
-  @ViewChild('map') mapElement:ElementRef;
-
-  public map:any;
-  constructor(public nav: NavController,
-              public storage:Storage,
-              public auth:Authentication,
-              public loadingCtrl:LoadingController) {
-
-  }
-  ionViewDidEnter(){
+  character;
+  trucks;
+  constructor(
+      public platform: Platform,
+      public params: NavParams,
+      public viewCtrl: ViewController,
+      public loadingCtrl: LoadingController,
+      public api:Api,public navCtrl:NavController
+  ) {
     let loading = this.loadingCtrl.create({
-      content: 'Loading Map...'
+      content: 'Loading Trucks...'
     });
     loading.present();
-    var mapOptions = {
-      zoom: 4,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      center: new google.maps.LatLng(20.5937, 78.9629),
-      disableDefaultUI: true
-    };
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.api.getLocation().then((data) => {
+      this.trucks =data;
+    });
     loading.dismiss();
   }
-
+  getTruck(truck){
+    this.navCtrl.push(TruckInMapPage,{data:truck})
+  }
 }

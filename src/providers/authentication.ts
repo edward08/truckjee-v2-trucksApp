@@ -50,8 +50,8 @@ export class Authentication {
                 });
         });
     }
-
     signOut() {
         this.storage.remove('current_user');
+        this.storage.clear();
     }
 }

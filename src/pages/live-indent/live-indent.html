@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle left>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Your Indents</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <div *ngIf="reqPresent">
+
+    <ion-card  *ngFor="let requirement of requirements" class="list-card-box-shadow" >
+
+      <ion-card-header class="list-card-header-box">
+        <ion-item text-center>
+          <strong class="rem-1p6">REQUIREMENT #</strong><span class="id-rem-1p8">{{requirement.id}}</span>
+        </ion-item>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ul class="experiences">
+          <li class="green">
+            <p><strong>From:</strong> {{requirement.source}}</p>
+          </li>
+          <li style="padding-bottom: 0;">
+            <p><strong>To:</strong> {{requirement.destination}} </p>
+          </li>
+        </ul>
+
+        <ion-grid>
+
+          <ion-row>
+            <ion-col>
+              <ion-icon name="md-car" item-left></ion-icon>
+              <strong>Truck Types:</strong>
+            </ion-col>
+            <ion-col>
+              <ion-row *ngFor="let indent_trucks of requirement.indent_trucks">
+                {{indent_trucks.truck_model.name }}
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-icon name="md-cash" item-left></ion-icon>
+              <strong>Expected Cost:</strong>
+            </ion-col>
+            <ion-col>
+              {{!requirement.payment_details.expected_cost ? "N/A" : 'Rs '+requirement.payment_details.expected_cost+'/-'}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-icon name="md-calendar" item-left></ion-icon>
+              <strong>Required:</strong>
+            </ion-col>
+            <ion-col>
+              <ion-icon name="md-calendar" item-left></ion-icon>
+              <strong>Delivery:</strong>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col >
+              {{requirement.date_required | date}}
+            </ion-col>
+            <ion-col>
+              {{requirement.date_delivery | date:'dd/MM/yy'}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <button (click)="viewRequirements(requirement.id)" ion-button full class="tj-button margin-b-0">View</button>
+    </ion-card>
+  </div>
+  <div *ngIf="!reqPresent && api_loaded" text-center primary>
+    <img src="assets/img/warnin.png">
+    <p>No Requirements available.</p>
+  </div>
+</ion-content>

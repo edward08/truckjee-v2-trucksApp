@@ -1,6 +1,6 @@
 //Core Modules
 import { Component } from '@angular/core';
-import {NavController, LoadingController, Platform, AlertController} from 'ionic-angular';
+import {NavController, LoadingController, Platform, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 //Services
@@ -13,7 +13,7 @@ import { TrucksPage } from '../truckspage/truckspage';
 
 declare var navigator;
 @Component({
-  selector: 'home',
+  selector: 'page-home',
   templateUrl: 'home.html'
 })
 
@@ -43,7 +43,6 @@ export class HomePage {
     loading.present(loading);
     let _self = this;
     this.Auth.signin(formData.value).then( role_data => {
-      // this.session.change(role_data);
       loading.dismiss();
       if( role_data == "owner" ){
         _self.nav.setRoot(MyApp);
@@ -74,4 +73,3 @@ export class HomePage {
     alert.present();
   }
 }
-
